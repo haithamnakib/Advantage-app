@@ -1,20 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, HashRouter } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import { configurePersistor, configureStore } from './redux/store/store';
+import {  configureStore } from './redux/store/store';
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-//import Table from "./components/Table";
-//import UserForm from "./components/UserForm";
 import Registration from "./components/Registration";
 import Login from "./components/Login";
-import Calculator from "./components/Calculator";
+import MainMenu from "./components/MainMenu";
+import MyAccount from "./components/MyAccount";
+import Policies from "./components/Policies";
+import OnlinePayment from "./components/OnlinePayment";
+import PaymentForm from "./components/OnlinePayment";
+import Updates from "./components/Updates";
 
 // Redux setup
 const store = configureStore();
-const persistor = configurePersistor(store);
-const wrapper = document.getElementById("root");
+//const persistor = configurePersistor(store);
+//const wrapper = document.getElementById("root");
 
 class RouterNavigationSample extends React.Component {
   render() {
@@ -27,8 +30,13 @@ class RouterNavigationSample extends React.Component {
             exact
             path="/"
             render={props => <Login {...props} />}/>
-          <Route path="/Calculator" render={props => <Calculator {...props} />}/>
+          <Route path="/MainMenu" render={props => <MainMenu {...props} />}/>
           <Route path="/Registration" render={props => <Registration {...props} />}/>
+          <Route path="/MyAccount" render={props => <MyAccount {...props} />}/>
+          <Route path="/Policies" render={props => <Policies {...props} />}/>
+          <Route path="/Login" render={props => <Login {...props} />}/>
+          <Route path="/OnlinePayment" render={props => <PaymentForm {...props} />}/>
+          <Route path="/Updates" render={props => <Updates {...props} />}/>
           
          
         </>

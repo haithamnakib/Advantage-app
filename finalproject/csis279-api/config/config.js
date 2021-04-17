@@ -4,7 +4,7 @@ var config = {
   HOST : 'localhost',
   USER : 'root',
   PASSWORD : 'root',
-  DB : 'bmi_db'
+  DB : 'advantageDB'
 }
 
 module.exports = {config: config} ;

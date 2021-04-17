@@ -42,7 +42,7 @@ exports.create = (req, res) => {
 };
 
 exports.getUsers = (req, res) => {
-  let sql = `SELECT * FROM bmi_db.users`;
+  let sql = `SELECT * FROM advantageDB.customers`;
   pool.getConnection((err, connection)=>{
     if(err) throw err;
     connection.query(sql, (err, result)=>{

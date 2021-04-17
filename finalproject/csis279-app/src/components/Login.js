@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import {Link} from "react-router-dom";
 import { getUsers} from "../actions/actions";
 //import Table1 from "../components/Table1";
-import Calculator from "../components/Calculator";
+//import MainMenu from "../components/MainMenu";
 import { connect } from 'react-redux';
 import actions from '../redux/actions/users';
+import application from '../css/application.css';
 
 
 class login extends Component {
   constructor(){
     super();
-  this.state = { Username: '', Password:'' ,  /*data: []*/}
+  this.state = { customerUsername: '', customerPassword:'' ,  /*data: []*/}
   
   }
 
@@ -31,70 +32,74 @@ class login extends Component {
  
   handleNameChange = event => {
     event.preventDefault();
-    this.setState({ Username: event.target.value });
+    this.setState({ customerUsername: event.target.value });
   }
   handlePasswordChange = event => {
     event.preventDefault();
-    this.setState({ Password: event.target.value });
+    this.setState({ customerPassword: event.target.value });
   }
 
  
   
 authenticator=(event)=>{
  
-  const { Username } = this.state;
-  const { Password } = this.state;
- alert("Hi " +Username)
- this.props.history.push("/Calculator");
-    /*const contents = this.state.data.forEach((item, key) => {
-if(Password===item.user_password && Username===item.user_name){
-    //alert("im here");
-  this.props.history.push("/Calculator");
+  const { customerUsername} = this.state;
+  const { customerPassword } = this.state;
+ //alert("Hi " +customerUsername);
+ //this.props.history.push("/MainMenu");
+    const contents = this.props.users.forEach((item,key) => {
+if(customerPassword===item.customer_Password && customerUsername===item.customer_Username){
+    alert("Hello "+item.customer_Firstname+" "+item.customer_Lastname+". Welcome to Advatange!");
+    console.log(customerUsername);
+  this.props.history.push("/MainMenu",{username:customerUsername});
 }else{
   alert("Wrong username or password");
+  alert("If you do not have an account at advantage, PLEASE register.")
 }
 }
-    )*/
+    )
 }
   render() {
    
-    let users=this.props.users;
-    console.log(users);
+    /*let users=this.props.users;
+    console.log(users);*/
 
 
     return (
         <div className="row mt-5">
         <div className="col-md-6 m-auto">
           <div className="card card-body">
-            <h1 className="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  BMI CALCULATOR </h1>
+            <h1 className="text-center mb-3"><i className="fas fa-sign-in-alt"></i>  Advantage </h1>
         
               <div className="form-group">
-                <label for="username">  Username</label>
+                <label htmlFor="username">  Username</label>
                 <input
                   type="username"
                   id="username"
                   name="username"
+                  required
                   className="form-control"
                   onChange={this.handleNameChange}
-                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.user_name : ' Enter Username'}
+                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.customer_Username : ' Enter Username'}
                 />
               </div>
-              <div class="form-group">
-                <label for="password">Password</label>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
                 <input
                   type="password"
                   id="password"
                   name="password"
+                  required
                   className="form-control"
                   onChange={this.handlePasswordChange}
-                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.user_password : 'Enter Password'}
+                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.customer_Password : 'Enter Password'}
                 />
               </div>
-              <button type="submit"  onClick={this.authenticator} class="btn btn-danger btn-block">Login</button>
-              <button type="googlelogin" class=" btn btn-secondary btn-block"> Login with Google </button>
-              <button type="FBLogin" class=" btn btn-primary btn-block"> Login with Facebook </button>
+              <button type="submit"  onClick={this.authenticator} className="btn btn-danger btn-block">Login</button>
+              <button type="googlelogin" className=" btn btn-secondary btn-block"> Login with Google </button>
+              <button type="FBLogin" className=" btn btn-primary btn-block"> Login with Facebook </button>
             <p className="lead mt-4">
-              SignUp? <Link to="/registration">   Register </Link>
+              SignUp? <Link to="/Registration">   Register </Link>
             </p>
         
           </div>

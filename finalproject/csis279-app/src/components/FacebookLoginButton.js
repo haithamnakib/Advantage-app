@@ -1,6 +1,6 @@
 import { response } from 'express';
 import React,{Component}from 'react';
-import '../css/calculator.css';
+import '../css/application.css';
 
 class FacebookLoginButton extends Component {
     componentDidMount(){

@@ -1,0 +1,20 @@
+body {
+    
+    background-image: url("insurance1.jpg");
+    background-size: 100% ;
+    
+     
+}
+
+.card {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  color: white;
+  background:transparent;
+  width: 400px;
+  position:absolute;
+  position: relative;
+  right: 400px;
+ 
+}
+
+

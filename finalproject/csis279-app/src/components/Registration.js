@@ -1,178 +1,180 @@
 import React, { Component } from 'react';
-//import{Link} from "react-router-dom";
-import { getUsers,register} from "../actions/actions";
+import{Link} from "react-router-dom";
+import { createUser} from "../actions/actions";
 import { connect } from 'react-redux';
+//import actions from '../redux/actions/users';
 import actions from '../redux/actions/users';
+import usersActions from '../redux/actions/users';
+
 
 class Registration extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
+    this.UserRegistrationFunction = this.UserRegistrationFunction.bind(this);
     this.state = { 
-        username: '',
-        password:'' ,
-        number:0,
-        email:'',
+        Firstname: '',
+        Lastname:'',
+        Password:'' ,
+        Username:'',
+        CNumber:0,
+        Email:'',
         data: []
     }
   
   }
-  registerUsers = () => {
-    register().then(res => {
-      this.setState({data: res});
-      console.log(res);
-    });
+  componentDidMount() {
+   const {dispatch}=this.props;
+   dispatch(actions.createUser());
   }
 
-  
-
- 
-  componentDidMount() {}
-   RegisterClickHandler=()=>{
-       const { user_name }=this.state;
-       const {user_password}=this.state;
-       const {user_number}=this.state;
-       const {user_email}=this.state;
-
-       let data={
-           username:user_name,
-           password:user_password,
-           email:user_email,
-           number:user_number,
-       }
-        const {dispatch}=this.props;
-        dispatch(actions.register(data));
-       
-       register(data).then((res)=>{
-           try{
-            this.props.history.push("Calculator");
-           }catch(error){
-               console.log("Error in registration! "+ error);
-           }
-          
-       });
-   };
-   registrations=(event)=>{
- 
-    const { Username } = this.state;
-    const { Password } = this.state;
-    const { Number } = this.state;
-    const { Email} =this.state;
-   //alert("Hi " +Username)
-      const contents = this.state.data.forEach((item, key) => {
-  if(Password===item.user_password && Username===item.user_name){
-      //alert("im here");
-    this.props.history.push("/Calculator");
-  }else{
-    alert("Wrong username or password");
-  }
-  }
-      )
-  }
-   
-  
-  /*retrieveUsers = () => {
-    getUsers().then(res => {
-      this.setState({data: res});
-      console.log(res);
-    });
-  }*/
- 
-  handleNameChange = event => {
+  UserRegistrationFunction = (event) => {
     event.preventDefault();
-    this.setState({ username: event.target.value });
+    const{Firstname}=this.state;
+    const{Lastname}=this.state;
+    const{Username}=this.state;
+    const{Password}=this.state;
+    const{CNumber}=this.state;
+    const{Email}=this.state;
+
+    let data={CustomerFirstname:Firstname,
+       CustomerLastname:Lastname,
+       CustomerPassword:Password,
+       CustomerUsername:Username,
+       CustomerNumber:CNumber,
+       CustomerEmail:Email}
+
+       
+
+/*let result= await this.props.dispatch(usersActions.createUser(data));
+this.setState({result});
+if(this.props.didCreate){
+  this.props.history.push("/MainMenu");
+}*/
+
+       console.log(Firstname);
+       console.log(Lastname);
+       console.log(Username);
+       console.log(Password);
+       console.log(CNumber);
+       console.log(Email);
+
+    if (this.props.location.state === undefined) {
+      //add User
+     createUser({Firstname,Lastname,Username,Password,Email,CNumber})
+        .then((res) => {
+          this.props.history.push("/Login");
+        })
+
+    } else {
+      
+          alert("im here");
+    
+  };
+}
+ 
+  handleUsernameChange = event => {
+    event.preventDefault();
+    this.setState({ Username: event.target.value });
+  }
+  handleFirstnameChange = event => {
+    event.preventDefault();
+    this.setState({ Firstname: event.target.value });
+  }
+  handleLastnameChange = event => {
+    event.preventDefault();
+    this.setState({ Lastname: event.target.value });
   }
   handlePasswordChange = event => {
     event.preventDefault();
-    this.setState({ password: event.target.value });
+    this.setState({ Password: event.target.value });
   }
   handleEmailChange = event => {
       event.preventDefault();
-      this.setState({email:event.target.value});
+      this.setState({Email:event.target.value});
   }
   handleNumberChange = event => {
       event.preventDefault();
-      this.setState({number:event.target.value});
+      this.setState({CNumber:event.target.value});
   }
- 
-  
-/*authenticator=(event)=>{
- 
-  const { Username } = this.state;
-  const { Password } = this.state;
- alert("Hi " +Username)
-    const contents = this.state.data.forEach((item, key) => {
-if(item.user_password===Password &&item.user_username===Username){
-  this.props.history.push("/Table1");
-}else{
-  alert("Wrong username or password");
-}
-    })
- 
-}*/
   render() {
-   
-
-
     return (
         <div className="row mt-5">
         <div className="col-md-6 m-auto">
           <div className="card card-body">
-            <h1 className="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Welcome! </h1>
+          <p className="lead mt-4" >
+               <Link to="/Login" >   Back to Login? </Link>
+            </p>
+            <h1 className="text-center mb-3"><i className="fas fa-sign-in-alt"></i>  Welcome! </h1>
+
+            <div className="form-group">
+                <label htmlFor="firstname">  Firstname</label>
+                <input
+                  type="firstname"
+                  className="form-control"
+                  onChange={this.handleFirstnameChange}
+                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.Firstname : ' Enter Firstname'}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="lastname">  Lastname</label>
+                <input
+                  type="lastname"
+                  className="form-control"
+                  onChange={this.handleLastnameChange}
+                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.Lastname : ' Enter Lastname'}
+                />
+              </div>
         
-              <div classname="form-group">
-                <label for="username">  Username</label>
+              <div className="form-group">
+                <label htmlFor="username">  Username</label>
                 <input
                   type="username"
-                  //id="username"
-                  //name="username"
                   className="form-control"
-                  onChange={this.handleNameChange}
-                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.user_name : ' Enter Username'}
+                  onChange={this.handleUsernameChange}
+                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.Username : ' Enter Username'}
+                  required
                 />
               </div>
-              <div class="form-group">
-                <label for="password"> Password</label>
+              <div className="form-group">
+                <label htmlFor="password"> Password</label>
                 <input
                   type="password"
-                  //id="password"
-                  //name="password"
                   className="form-control"
                   onChange={this.handlePasswordChange}
-                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.user_password : 'Enter Password'}
+                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.Password : 'Enter Password'}
                 />
               </div>
-              <div classname="form-group">
-                <label for="number">  Phone Number</label>
+              <div className="form-group">
+                <label htmlFor="number">  Phone Number</label>
                 <input
                   type="number"
-                  //id="username"
-                  //name="username"
                   className="form-control"
                   onChange={this.handleNumberChange}
-                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.user_number : ' Enter Number'}
+                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.CNumber : ' Enter Number'}
                   />
                   </div>
-                  <div classname="form-group">
-                <label for="email"> Email</label>
+                  <div className="form-group">
+                <label htmlFor="email"> Email</label>
                 <input
-                  type="address"
-                  //id="username"
-                  //name="username"
+                  type="email"
                   className="form-control"
                   onChange={this.handleEmailChange}
-                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.user_address : ' Enter your email'}
+                  placeholder={(this.props.location.state !== undefined) ? this.props.location.state.Email : ' Enter your Email'}
                   />
                   </div>
-              
+              <p>    </p>
               <button 
               id="1"
               name="btn"
-              type="submit"  
+              type="submit" 
+              method="POST" 
               onClick={
-                //this.RegisterClickHandler()
-                this.registerUsers
+                this.UserRegistrationFunction
+                
               } 
-              class="btn btn-danger btn-block">
+              
+              className="btn btn-danger btn-block">
             
 
               Registration

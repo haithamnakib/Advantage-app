@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import UserForm from "./components/UserForm";
 import Login from "./components/Login";
 import Registration from "./components/Registration";
-import Calculator from "./components/Calculator";
+import MainMenu from "./components/MainMenu";
 
 class RouterNavigationSample extends React.Component {
   render() {
@@ -19,7 +19,7 @@ class RouterNavigationSample extends React.Component {
             exact
             path="/"
             render={props => <Login {...props} />}/>
-          <Route path="/Calculator" render={props => <Calculator {...props} />}/>
+          <Route path="/MainMenu" render={props => <MainMenu {...props} />}/>
           <Route path="/Registration" render={props => <Registration {...props} />}/>
           
          
